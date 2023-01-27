@@ -1,0 +1,7 @@
+.wrapper{
+    @apply bg-amber-200 rounded-[10px] p-[10px] w-fit mr-[20px] mb-[20px]
+}
+
+.stars{
+    @apply flex items-center
+}

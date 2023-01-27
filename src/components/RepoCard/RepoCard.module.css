@@ -1,0 +1,11 @@
+.wrapper{
+    @apply flex justify-between w-full duration-500 px-[20px] py-[10px]  my-[10px] hover:bg-amber-100 rounded-[10px]
+}
+
+.wrapper_btn{
+    @apply flex flex-col justify-evenly
+}
+
+.repo_name{
+    @apply text-blue-700 hover:border-b-2 border-b-blue-700
+}

@@ -1,0 +1,9 @@
+
+.wrapper{
+    @apply flex w-full p-[30px] flex-wrap
+}
+
+a{
+    @apply text-blue-700 hover:border-b-2 border-b-blue-700
+}
+

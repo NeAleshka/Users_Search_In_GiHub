@@ -1,0 +1,26 @@
+.wrapper {
+    @apply flex flex-col w-full justify-center items-center mt-[30px]
+}
+
+.search_input {
+    @apply w-[500px] h-[30px] border pl-[15px] rounded-[10px] outline-blue-400
+}
+
+.popup {
+    @apply w-[500px] max-h-[700px] overflow-y-scroll mt-[5px] shadow-xl  overflow-x-hidden
+}
+
+.popup::-webkit-scrollbar {
+    width: 5px;
+    height: 20px;
+}
+
+.popup::-webkit-scrollbar-thumb {
+    background: #d7c0c0;
+    border-radius: 10px;
+}
+
+.popup::-webkit-scrollbar-thumb:hover{
+    background: #6c5f5f;
+}
+
