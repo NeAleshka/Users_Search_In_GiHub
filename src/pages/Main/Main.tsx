@@ -5,10 +5,10 @@ import {useDebounce} from "../../hooks";
 import RepoCard from "../../components/RepoCard/RepoCard";
 
 const Main = () => {
-    const [search, setSearch] = useState<string>('')
+    const [search, setSearch] = useState<string>(localStorage?.getItem('searchUser')??'')
     const debounce = useDebounce(search)
     const {isLoading, isError, data: users} = useSearchUserQuery(debounce, {
-        skip: debounce.length < 3,
+        skip: debounce.length <= 3,
     })
 
     let [getRepos, {
@@ -16,7 +16,7 @@ const Main = () => {
         isLoading: isGetRepoLoading,
         data: userRepos,
     }] = useLazyGetUserReposQuery()
-    const [showUsersList, setShowUsersList] = useState<boolean>(false)
+    const [showUsersList, setShowUsersList] = useState<boolean>(!!localStorage?.getItem('searchUser'))
 
     const searchUserClick = (userName: string) => {
         localStorage.setItem('searchUser', userName)
@@ -25,12 +25,17 @@ const Main = () => {
     }
 
     useEffect(() => {
-        getRepos(localStorage.getItem('searchUser')??'')
-    }, [])
+        setShowUsersList(debounce.length > 3 && users?.items.length != 0)
+        debounce.length <= 3 && localStorage.removeItem('searchUser')
+    }, [debounce])
+
 
     useEffect(() => {
-        setShowUsersList(debounce.length > 3 && users?.items.length != 0)
-    }, [debounce])
+        const localUserName=localStorage.getItem('searchUser')
+        localUserName && getRepos(localStorage.getItem('searchUser')??'')
+        localUserName && setShowUsersList(false)
+    }, [])
+
     return (
         <>
             <div className={styles.wrapper}>
@@ -52,7 +57,7 @@ const Main = () => {
                             </div>)
                     }
                     {
-                        !showUsersList && userRepos?.map((repo) =>
+                        !showUsersList && debounce.length>3 && userRepos?.map((repo) =>
                             <RepoCard key={repo.id} name={repo.name}
                                       language={repo.language}
                                       html_url={repo.html_url}
